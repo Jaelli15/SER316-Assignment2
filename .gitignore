@@ -1,0 +1,16 @@
+build/
+.gradle/
+gradle-app.setting
+.gradletasknamecache
+
+*.class
+*.ctxt
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+.mtj.tmp/
+
+!gradle-wrapper.jar
+!gradle-wrapper.properties
