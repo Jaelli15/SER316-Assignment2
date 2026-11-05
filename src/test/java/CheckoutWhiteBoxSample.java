@@ -65,6 +65,7 @@ public class CheckoutWhiteBoxSample {
     private void addMixedInventory() {
         Book fictionA = new Book("978-0-1234-5678-9", "Fiction A", "Author A", Book.BookType.FICTION, 1);
         Book fictionB = new Book("978-0-9876-5432-1", "Fiction B", "Author B", Book.BookType.FICTION, 1);
+        fictionB.checkout(); // Make fictionB unavailable
         Book nonFiction = new Book("978-0-1111-2222-3", "Non-Fiction", "Author C", Book.BookType.NONFICTION, 1);
 
         checkout.addBook(fictionA);
