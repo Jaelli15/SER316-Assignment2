@@ -49,7 +49,7 @@ public class CheckoutWhiteBoxSample {
 
     @Test 
     @DisplayName ("WB Test3: countBooksByType - onlyAvailable=true counts only available matches")
-    public void testCountBooksByType_onlyAvailableTrue_countsAvailable() {
+    public void testCountBooksByType_onlyAvail_mixedInv_countsAvailMatches() {
         addMixedInventory();
         assertEquals(1, checkout.countBooksByType(Book.BookType.FICTION, true), "Only fictionA is Fiction and available");
     }
