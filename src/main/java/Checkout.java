@@ -141,6 +141,51 @@ public class Checkout {
      */
     public double checkoutBook(Book book, Patron patron) {
 //        Implement me in Assignment 3
+        double eligibility = validatePatronEligibility(patron);
+        if (eligibility != 0.0) {
+            return eligibility;
+        }
+
+        if (book == null) {
+            return 2.1;
+        }
+
+        if (book.isReferenceOnly()) {
+            return 5.0;
+        }
+
+        LocalDate dueDate = LocalDate.now().plusDays(patron.getLoanPeriodDays());
+
+        if (patron.hasBookCheckedOut(book.getIsbn())){
+            patron.addCheckedOutBook(book.getIsbn(), dueDate);
+            for(Transaction t : history){
+                if(t.patron.equals(patron) && t.book.equals(book) && t.returnDate == null){
+                    t.dueDate = dueDate;
+                    break;
+                }
+            }
+            return 0.1;
+        }
+
+        if (book.getAvailableCopies() <= 0) {
+            return 2.0;
+        }
+        
+        if (patron.getCheckoutCount() >= patron.getMaxCheckoutLimit()) {
+            return 3.2;
+        }
+
+        patron.addCheckedOutBook(book.getIsbn(), dueDate);
+        book.checkout();
+        history.add(new Transaction(patron, book, LocalDate.now(), dueDate));
+
+        if (patron.getOverdueCount() >= 1) {
+            return 1.0;
+        }
+
+        if(patron.getCheckoutCount() >= patron.getMaxCheckoutLimit() - 2){
+            return 1.1;
+        }
         // Normal success
         return 0.0;
     }
