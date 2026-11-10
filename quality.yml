@@ -1,0 +1,71 @@
+name: CI quality checks
+
+# This starter already runs on StaticAnalysis. Push it first and inspect the
+# successful Build job before completing the remaining TODOs.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - StaticAnalysis
+      # TODO 1: Add the integrated development branch.
+  pull_request:
+    branches:
+      - StaticAnalysis
+      # TODO 1: Add the integrated development branch here as well.
+
+# The workflow only needs to read repository contents.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: gradle
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      # `assemble` compiles and packages the project without running verification tasks.
+      - name: Compile and assemble
+        run: ./gradlew assemble
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      # TODO 2: Add the checkout, Java setup, and Gradle permission steps.
+      # Jobs use separate runners, so this job cannot reuse the build job's files.
+
+      - name: Run unit tests
+        run: ./gradlew test
+
+      # TODO 3: Upload the test report with actions/upload-artifact@v4 (you will need to research how to do that).
+      # Apply if: always() so a failed test job still uploads its report.
+
+  static-analysis:
+    name: Static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Static-analysis TODO placeholder
+        run: echo "Replace this placeholder while completing TODOs 4-6."
+
+      # TODO 4: Add the checkout, Java setup, and Gradle permission steps.
+
+      # TODO 5: Add separate steps for Checkstyle and SpotBugs. Use:
+      #   ./gradlew checkstyleMain
+      #   ./gradlew spotbugsMain -PstaticAnalysis=true
+      # Apply if: always() to the SpotBugs step so it still runs and produces a
+      # report when Checkstyle finds enough remaining violations to fail its step.
+
+      # TODO 6: Upload build/reports/checkstyle/ and build/reports/spotbugs/
+      # with actions/upload-artifact@v4. Apply if: always(), choose a distinct
+      # artifact name, and use if-no-files-found: warn. Remove the placeholder
+      # step after completing this job.
