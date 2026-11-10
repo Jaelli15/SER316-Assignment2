@@ -389,6 +389,6 @@ public class Checkout {
     }
 
     public Map<String, Patron> getPatrons() {
-        return patrons;
+        return new HashMap<>(patrons);
     }
 }
