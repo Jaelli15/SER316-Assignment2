@@ -159,7 +159,7 @@ public class Checkout {
 
         LocalDate dueDate = LocalDate.now().plusDays(patron.getLoanPeriodDays());
 
-        if (patron.hasBookCheckedOut(book.getIsbn())){
+        if (patron.hasBookCheckedOut(book.getIsbn())) {
             patron.addCheckedOutBook(book.getIsbn(), dueDate);
             for(Transaction t : history){
                 if(t.patron.equals(patron) && t.book.equals(book) && t.returnDate == null){
