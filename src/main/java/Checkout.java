@@ -385,7 +385,7 @@ public class Checkout {
     }
 
     public Map<String, Book> getInventory() {
-        return bookList;
+        return new HashMap<>(bookList);
     }
 
     public Map<String, Patron> getPatrons() {
