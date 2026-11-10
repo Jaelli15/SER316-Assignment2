@@ -35,6 +35,9 @@ public class Checkout {
         }
     }
 
+    /** 
+     * Constructor initializes the checkout system with empty inventory and patron records.
+     */
     public Checkout() {
         this.bookList = new HashMap<>();
         this.patrons = new HashMap<>();
