@@ -9,8 +9,8 @@ on:
   # An offset example is: cron: '2-59/5 * * * *'. Scheduled runs use the default
   # branch and can be delayed; cron is not an exact timer. Disable the schedule
   # afterward so the repository does not consume Actions minutes indefinitely.
-  schedule:
-    - cron: '2-59/5 * * * *'
+  #schedule:
+  #  - cron: '2-59/5 * * * *'
   
 
 permissions:
