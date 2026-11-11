@@ -64,24 +64,25 @@ Use one row per finding you investigated in `Checkout.java`. For SpotBugs, inclu
 
 1. Were you able to complete the Test and Static Analysis jobs?
 
-   **Answer:**
+   **Answer:** Yes, and all reports show on GitHub workflow.
 
 2. Did the Static Analysis job pass? Explain what happened in its Checkstyle and SpotBugs steps and why.
 
-   **Answer:**
+   **Answer:** The Static Analysis job passed and both the Checkstyle and SpotBugs steps returned a Build Successful prompt. The Checkstyle test shows the left over 36 warnings and the SpotBugs test shows the 4 warnings still showing from Patron and Checkout that did not need changed.
 
 ### 3.2 Workflow-run diagnosis
 Provide information from your final run. Build and Test must pass. Static Analysis must run and upload its reports, but it may still report a failed job.
 
-**Run URL:**  
-**Commit:**  
-**Jobs that ran:**  
-**Which jobs passed, which failed, and why?** 
+**Run URL:**  [Run](https://github.com/Jaelli15/SER316-Assignment2/actions/runs/43032445342)
+**Commit:**  [Commit](https://github.com/Jaelli15/SER316-Assignment2/commit/eae3fa7f24a5499f8b359cb2e2926005170ad85d)
+**Jobs that ran:**  3: Build, Test, Static Analysis
+**Which jobs passed, which failed, and why?** All three passed
 
 
 ## Part 4: Integration into Dev
 
 Provide a short summary of how you merged the branches and what problems or conflicts you encountered. 
+   First I switched to Blackbox branch and created the dev branch from there. Then I started by merging Whitebox, then Review, then StaticAnalysis branches. I did not have any merge conflicts so it was able to merge correctly. After all merged and the branch diagram showed correct, I pushed branch to GitHub.
 
 
 ## Part 5: Verified build

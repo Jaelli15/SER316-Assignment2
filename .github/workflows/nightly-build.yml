@@ -1,0 +1,84 @@
+name: Verified application build
+
+on:
+  # Keep this manual trigger. It lets you test without waiting for a schedule.
+  workflow_dispatch:
+
+  # EXTRA CREDIT: After the manual workflow works on main, research the `schedule`
+  # event and add a temporary five-minute schedule for one demonstration run.
+  # An offset example is: cron: '2-59/5 * * * *'. Scheduled runs use the default
+  # branch and can be delayed; cron is not an exact timer. Disable the schedule
+  # afterward so the repository does not consume Actions minutes indefinitely.
+  schedule:
+    - cron: '2-59/5 * * * *'
+  
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verified-application-build
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      # TODO 1: Using your completed quality.yml as a model, add steps that
+      # check out the repository, set up Java 21, make gradlew executable, and
+      # run ./gradlew test. Then upload build/reports/tests/ with if: always()
+      # so the test report is retained even when tests fail. Remove the
+      # placeholder step after completing this job.
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: gradle
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+      - name: Run unit tests
+        run: ./gradlew test
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: build/reports/tests/
+
+  package:
+    name: Package verified application
+    # TODO 2: Use `needs` so this job runs only after the test job succeeds.
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      # TODO 3: Repeat the checkout, Java 21, and Gradle permission setup on
+      # this job's fresh runner. Then run ./gradlew distZip to create a runnable
+      # distribution ZIP.
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: gradle
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+      - name: Create distribution ZIP
+        run: ./gradlew distZip
+
+      # TODO 4: Upload build/distributions/*.zip with
+      # actions/upload-artifact@v4. Choose a descriptive artifact name, include
+      # if: success(), and use if-no-files-found: error. Remove the placeholder
+      # step after completing this job.
+      - name: Upload distribution ZIP
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: distribution-zip
+          path: build/distributions/*.zip
+          if-no-files-found: error
