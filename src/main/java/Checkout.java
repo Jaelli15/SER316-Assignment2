@@ -10,7 +10,7 @@ import java.util.Map;
  * Handles book checkouts, returns, renewals, and fine calculations.
  */
 public class Checkout {
-    public static double MAX_FINE_AMOUNT = 25.0;
+    public static final double MAX_FINE_AMOUNT = 25.0;
 
     private Map<String, Book> bookList; // ISBN -> Book
     private Map<String, Patron> patrons; // PatronID -> Patron
@@ -35,6 +35,9 @@ public class Checkout {
         }
     }
 
+    /** 
+     * Constructor initializes the checkout system with empty inventory and patron records.
+     */
     public Checkout() {
         this.bookList = new HashMap<>();
         this.patrons = new HashMap<>();
@@ -141,6 +144,51 @@ public class Checkout {
      */
     public double checkoutBook(Book book, Patron patron) {
 //        Implement me in Assignment 3
+        double eligibility = validatePatronEligibility(patron);
+        if (eligibility != 0.0) {
+            return eligibility;
+        }
+
+        if (book == null) {
+            return 2.1;
+        }
+
+        if (book.isReferenceOnly()) {
+            return 5.0;
+        }
+
+        LocalDate dueDate = LocalDate.now().plusDays(patron.getLoanPeriodDays());
+
+        if (patron.hasBookCheckedOut(book.getIsbn())) {
+            patron.addCheckedOutBook(book.getIsbn(), dueDate);
+            for(Transaction t : history){
+                if(t.patron.equals(patron) && t.book.equals(book) && t.returnDate == null){
+                    t.dueDate = dueDate;
+                    break;
+                }
+            }
+            return 0.1;
+        }
+
+        if (book.getAvailableCopies() <= 0) {
+            return 2.0;
+        }
+        
+        if (patron.getCheckoutCount() >= patron.getMaxCheckoutLimit()) {
+            return 3.2;
+        }
+
+        patron.addCheckedOutBook(book.getIsbn(), dueDate);
+        book.checkout();
+        history.add(new Transaction(patron, book, LocalDate.now(), dueDate));
+
+        if (patron.getOverdueCount() >= 1) {
+            return 1.0;
+        }
+
+        if(patron.getCheckoutCount() >= patron.getMaxCheckoutLimit() - 2){
+            return 1.1;
+        }
         // Normal success
         return 0.0;
     }
@@ -243,7 +291,7 @@ public class Checkout {
             return false;
         }
 
-        return typeString == expectedType.toString();
+        return typeString.equals(expectedType.toString());
     }
 
     /**
@@ -337,10 +385,10 @@ public class Checkout {
     }
 
     public Map<String, Book> getInventory() {
-        return bookList;
+        return new HashMap<>(bookList);
     }
 
     public Map<String, Patron> getPatrons() {
-        return patrons;
+        return new HashMap<>(patrons);
     }
 }

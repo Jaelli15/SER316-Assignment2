@@ -110,7 +110,7 @@ public class Book {
     }
 
     public void resetAvailability() {
-        this.availableCopies = this.totalCopies;
+        this.availableCopies = referenceOnly ? 0 : totalCopies;
         this.available = true;
     }
 
