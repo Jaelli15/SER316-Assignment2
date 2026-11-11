@@ -10,7 +10,7 @@ import java.util.Map;
  * Handles book checkouts, returns, renewals, and fine calculations.
  */
 public class Checkout {
-    public static double MAX_FINE_AMOUNT = 25.0;
+    public static final double MAX_FINE_AMOUNT = 25.0;
 
     private Map<String, Book> bookList; // ISBN -> Book
     private Map<String, Patron> patrons; // PatronID -> Patron
@@ -35,6 +35,9 @@ public class Checkout {
         }
     }
 
+    /** 
+     * Constructor initializes the checkout system with empty inventory and patron records.
+     */
     public Checkout() {
         this.bookList = new HashMap<>();
         this.patrons = new HashMap<>();
@@ -156,7 +159,7 @@ public class Checkout {
 
         LocalDate dueDate = LocalDate.now().plusDays(patron.getLoanPeriodDays());
 
-        if (patron.hasBookCheckedOut(book.getIsbn())){
+        if (patron.hasBookCheckedOut(book.getIsbn())) {
             patron.addCheckedOutBook(book.getIsbn(), dueDate);
             for(Transaction t : history){
                 if(t.patron.equals(patron) && t.book.equals(book) && t.returnDate == null){
@@ -382,10 +385,10 @@ public class Checkout {
     }
 
     public Map<String, Book> getInventory() {
-        return bookList;
+        return new HashMap<>(bookList);
     }
 
     public Map<String, Patron> getPatrons() {
-        return patrons;
+        return new HashMap<>(patrons);
     }
 }
