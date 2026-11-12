@@ -3,8 +3,8 @@
 **Student name:**  Jason Elliott
 **ASU ID:**  jaelli15
 **Repository:**  
-**Final Dev workflow run:**  
-**Verified-build run on main:**  
+**Final Dev workflow run:** 
+**Verified-build run on main:**  Yes
 
 This Markdown file is the complete report. Be specific where requested, but keep your answers concise. Do not create a separate PDF.
 
@@ -74,32 +74,43 @@ Use one row per finding you investigated in `Checkout.java`. For SpotBugs, inclu
 Provide information from your final run. Build and Test must pass. Static Analysis must run and upload its reports, but it may still report a failed job.
 
 **Run URL:**  [Run](https://github.com/Jaelli15/SER316-Assignment2/actions/runs/43032445342)
+
 **Commit:**  [Commit](https://github.com/Jaelli15/SER316-Assignment2/commit/eae3fa7f24a5499f8b359cb2e2926005170ad85d)
+
 **Jobs that ran:**  3: Build, Test, Static Analysis
+
 **Which jobs passed, which failed, and why?** All three passed
 
 
 ## Part 4: Integration into Dev
 
 Provide a short summary of how you merged the branches and what problems or conflicts you encountered. 
+
    First I switched to Blackbox branch and created the dev branch from there. Then I started by merging Whitebox, then Review, then StaticAnalysis branches. I did not have any merge conflicts so it was able to merge correctly. After all merged and the branch diagram showed correct, I pushed branch to GitHub.
 
 
 ## Part 5: Verified build
 
-**Workflow-run URL:**  
-**Artifact name:**  
+**Workflow-run URL:**  [Workflow](https://github.com/Jaelli15/SER316-Assignment2/actions/workflows/nightly-build.yml)
+
+**Artifact name:**  Test
+
 **Command used to run the extracted application:**  
-**Did the application start successfully?**  
+
+**Did the application start successfully?**  Yes
+
 
 Why should the `package` job depend on the `test` job?
 
 ### Optional scheduled-build research (extra credit)
 
-**Scheduled run URL:**  
-**Commit that disables/removes the five-minute schedule afterward:**  
+**Scheduled run URL:**  [Scheduled](https://github.com/Jaelli15/SER316-Assignment2/actions/runs/43048201140)
+
+**Commit that disables/removes the five-minute schedule afterward:**  [Commit](https://github.com/Jaelli15/SER316-Assignment2/commit/c1b7aded548498534d2d3c127618f9a7467c7c4c)
+
 
 Record the cron expression you researched. Explain why the scheduled run uses the default branch, why GitHub may start it late, and why the five-minute schedule should not remain enabled:
+**Answer:** using cron "*/5 * * * *" makes the workflow scheduled to run every five minutes. GitHub is set up to run on the default branch so that it runs on the main designated version of the program, and despite it being set up to run every five minutes through the cron job GitHub will delay the workflow depending on traffic on the server so it could be within a few minutes or longer. GitHub does allow a set amount of runner minutes per month but that could quickly be used up if the workflow is set to remain testing every five minutes.
 
 ## Part 6: Engineering reflection
 
@@ -113,5 +124,5 @@ Write 175–275 words. Address all six prompts:
 6. Why is static analysis not a prerequisite for the packaging job in this assignment?
 
 **Response:**
-
+The SpotBug finding of the patron list and the book list potentially being compromised by returning the actual list had the greatest potential impact. In general practice, it is unwise to give any access outside of the core program to modify either accidently or maliciously any parts of that program. Returning access to the actual list instead of a copy could be detremental. The different tests were able to show issues in not only potential bugs but also potential readability issues through whitespace errors or final variable declarations. The final `Dev` CI established that the program would run correctly with only minor errors in code setup remaining after the main bug fixes were performed. This means that `Dev` is ready to be pushed to main production. Best way for the CI process to be useful is to set up automatic testing based on when the branch the user is working on is updated either though push or pull so they always know what needs to be fixed before its too late. The packaging job does not publish failing ZIP to prevent accidental usage or checking of failed program and instead gives an error for issues to be fixed before wrong ZIP is published. The packaging job is only to show that the code works without errors and is ready to be published through the ZIP, not as much that certain code readability should be improved. 
 
