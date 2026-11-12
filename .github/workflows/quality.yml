@@ -9,11 +9,13 @@ on:
       - StaticAnalysis
       # TODO 1: Add the integrated development branch.
       - Development
+      - dev
   pull_request:
     branches:
       - StaticAnalysis
       # TODO 1: Add the integrated development branch here as well.
       - Development
+      - dev
 
 # The workflow only needs to read repository contents.
 permissions:
