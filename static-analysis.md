@@ -1,10 +1,10 @@
 # Assignment 4 — CI and Static Analysis Report
 
-**Student name:**  Jason Elliott
-**ASU ID:**  jaelli15
-**Repository:**  
-**Final Dev workflow run:** 
-**Verified-build run on main:**  Yes
+**Student name:**  Jason Elliott<br>
+**ASU ID:**  jaelli15<br>
+**Repository:**  SER316/Assignment2<br>
+**Final Dev workflow run:** [Workflow](https://github.com/Jaelli15/SER316-Assignment2/actions/runs/43135499628)<br>
+**Verified-build run on main:**  [Verified](https://github.com/Jaelli15/SER316-Assignment2/actions/runs/43099011665)<br>
 
 This Markdown file is the complete report. Be specific where requested, but keep your answers concise. Do not create a separate PDF.
 
@@ -91,14 +91,10 @@ Provide a short summary of how you merged the branches and what problems or conf
 
 ## Part 5: Verified build
 
-**Workflow-run URL:**  [Workflow](https://github.com/Jaelli15/SER316-Assignment2/actions/workflows/nightly-build.yml)
-
-**Artifact name:**  Test
-
-**Command used to run the extracted application:**  
-
-**Did the application start successfully?**  Yes
-
+**Workflow-run URL:**  [Workflow](https://github.com/Jaelli15/SER316-Assignment2/actions/workflows/nightly-build.yml)<br>
+**Artifact name:**  Test<br>
+**Command used to run the extracted application:**  <br>
+**Did the application start successfully?**  Yes<br>
 
 Why should the `package` job depend on the `test` job?
 
@@ -109,7 +105,7 @@ Why should the `package` job depend on the `test` job?
 **Commit that disables/removes the five-minute schedule afterward:**  [Commit](https://github.com/Jaelli15/SER316-Assignment2/commit/c1b7aded548498534d2d3c127618f9a7467c7c4c)
 
 
-Record the cron expression you researched. Explain why the scheduled run uses the default branch, why GitHub may start it late, and why the five-minute schedule should not remain enabled:
+Record the cron expression you researched. Explain why the scheduled run uses the default branch, why GitHub may start it late, and why the five-minute schedule should not remain enabled:<br>
 **Answer:** using cron "*/5 * * * *" makes the workflow scheduled to run every five minutes. GitHub is set up to run on the default branch so that it runs on the main designated version of the program, and despite it being set up to run every five minutes through the cron job GitHub will delay the workflow depending on traffic on the server so it could be within a few minutes or longer. GitHub does allow a set amount of runner minutes per month but that could quickly be used up if the workflow is set to remain testing every five minutes.
 
 ## Part 6: Engineering reflection
